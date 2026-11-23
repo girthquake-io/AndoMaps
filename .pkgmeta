@@ -8,3 +8,9 @@ ignore:
   - Media/AndoMaps-emblem.svg
   - Media/AndoMaps-compass.svg
   - Media/AndoMaps-compass-64.png
+
+# CHANGELOG.md is the release notes on CurseForge and GitHub (instead of a
+# list of commit messages). Add a section for each version before tagging it.
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown

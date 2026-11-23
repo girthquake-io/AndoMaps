@@ -37,7 +37,7 @@ Flight paths, boats, zeppelins, the Deeprun Tram, your Hearthstone, mage telepor
 
 Releases are built by the [BigWigs packager](https://github.com/BigWigsMods/packager) (`.github/workflows/release.yml`):
 
-1. Bump `## Version` in `AndoMaps.toc`.
+1. Bump `## Version` in `AndoMaps.toc` and add a section for that version at the top of `CHANGELOG.md` (it becomes the release notes on CurseForge and GitHub).
 2. Commit, then tag with the same number and push the tag:
    `git tag -a 2.12 -m "2.12" && git push --follow-tags`
 3. GitHub Actions packages the addon (skipping the files listed in `.pkgmeta`) and uploads it to CurseForge and a GitHub release.
