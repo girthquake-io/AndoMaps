@@ -49,6 +49,11 @@ FirstIcon("boat", {
     "Interface\\Icons\\INV_Misc_ShipWheel",
 })
 FirstIcon("zeppelin", {
+    "Interface\\Icons\\INV_HordeZeppelinMountClassic",
+    "Interface\\Icons\\INV_HordeZeppelinMount",
+    "Interface\\Icons\\INV_ZeppelinMount",
+    "Interface\\Icons\\INV_AirshipMountGoblin",
+    "Interface\\Icons\\Achievement_Dungeon_HordeAirship",
     "Interface\\Icons\\INV_Misc_Zeppelin",
     "Interface\\Icons\\INV_Misc_Zeppelin_01",
     "Interface\\Icons\\Achievement_Zone_Zeppelin",
@@ -58,7 +63,6 @@ FirstIcon("zeppelin", {
     "Interface\\Icons\\INV_Misc_Toy_Zeppelin",
 })
 AM.ICON = ICON
-local LOGO = "Interface\\AddOns\\AndoMaps\\Media\\AndoMaps" -- the emblem, 64x64 TGA
 local COMPASS = "Interface\\AddOns\\AndoMaps\\Media\\AndoMapsCompass" -- minimap icon: just the compass
 local DEST_ICON = { dungeon = true, raid = true, bank = true, ah = true }
 local function LegIcon(leg)
@@ -897,7 +901,7 @@ local function CreateMapButton()
     if mapBtn or not wm or not wm.ScrollContainer then return end
     local sc = wm.ScrollContainer
     mapBtn = CreateFrame("Button", "AndoMapsWorldMapButton", sc)
-    mapBtn:SetSize(36, 36)
+    mapBtn:SetSize(32, 32)
     -- Top-right corner, tucked under any of Blizzard's own map buttons that sit there.
     local function PlaceMapButton()
         local y = -10
@@ -919,15 +923,23 @@ local function CreateMapButton()
     local top = OpenMapAPI and OpenMapAPI.ArtTopLevel and OpenMapAPI.ArtTopLevel()
     mapBtn:SetFrameLevel(math.max((top or 0) + 20, sc:GetFrameLevel() + 50))
     mapBtn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    -- The compass already has its own gold rim, so it stands alone: no Blizzard
+    -- border around it, a soft shadow under it and a gentle glow on hover.
+    local shadow = mapBtn:CreateTexture(nil, "BACKGROUND")
+    shadow:SetTexture(COMPASS)
+    shadow:SetVertexColor(0, 0, 0, 0.6)
+    shadow:SetSize(34, 34)
+    shadow:SetPoint("CENTER", 1, -2)
     local icon = mapBtn:CreateTexture(nil, "ARTWORK")
-    icon:SetTexture(LOGO)
-    icon:SetSize(26, 26)
-    icon:SetPoint("CENTER")
-    local ring = mapBtn:CreateTexture(nil, "OVERLAY")
-    ring:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
-    ring:SetSize(60, 60)
-    ring:SetPoint("TOPLEFT", -2, 1)
-    mapBtn:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
+    icon:SetTexture(COMPASS)
+    icon:SetAllPoints()
+    local glow = mapBtn:CreateTexture(nil, "HIGHLIGHT")
+    glow:SetTexture(COMPASS)
+    glow:SetAllPoints()
+    glow:SetBlendMode("ADD")
+    glow:SetAlpha(0.35)
+    mapBtn:SetScript("OnMouseDown", function() icon:SetPoint("TOPLEFT", 1, -1); icon:SetPoint("BOTTOMRIGHT", -1, 1) end)
+    mapBtn:SetScript("OnMouseUp", function() icon:SetAllPoints() end)
     -- "Route here" picker: a see-through layer over the map that catches one click.
     -- The mouse wheel still reaches the map, so you can zoom while picking.
     local pick = CreateFrame("Frame", "AndoMapsPickLayer", sc)
