@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff1b8"/>
+      <stop offset="0.35" stop-color="#e8b94a"/>
+      <stop offset="0.65" stop-color="#a9741f"/>
+      <stop offset="1" stop-color="#f3cf6a"/>
+    </linearGradient>
+    <radialGradient id="sea" cx="0.45" cy="0.38" r="0.7">
+      <stop offset="0" stop-color="#3c86c9"/>
+      <stop offset="0.55" stop-color="#1a4f8f"/>
+      <stop offset="1" stop-color="#0a2148"/>
+    </radialGradient>
+  </defs>
+  <!-- blue disc with a thin gold edge -->
+  <circle cx="256" cy="256" r="250" fill="url(#gold)"/>
+  <circle cx="256" cy="256" r="234" fill="url(#sea)"/>
+  <!-- compass rose, big and bold so it reads at minimap size -->
+  <g transform="translate(256 256)">
+    <g transform="rotate(45)">
+      <path d="M0 -150 L22 -22 L0 0 Z M0 150 L-22 22 L0 0 Z M-150 0 L-22 -22 L0 0 Z M150 0 L22 22 L0 0 Z" fill="#e6eef7"/>
+      <path d="M0 -150 L-22 -22 L0 0 Z M0 150 L22 22 L0 0 Z M-150 0 L-22 22 L0 0 Z M150 0 L22 -22 L0 0 Z" fill="#8ea6c0"/>
+    </g>
+    <path d="M0 -222 L34 -34 L0 0 Z M0 222 L-34 34 L0 0 Z M-222 0 L-34 -34 L0 0 Z M222 0 L34 34 L0 0 Z" fill="#f3cf6a"/>
+    <path d="M0 -222 L-34 -34 L0 0 Z M0 222 L34 34 L0 0 Z M-222 0 L-34 34 L0 0 Z M222 0 L34 -34 L0 0 Z" fill="#8a5d17"/>
+    <circle r="34" fill="url(#gold)" stroke="#5a3a0c" stroke-width="6"/>
+    <circle r="13" fill="#12294d"/>
+  </g>
+</svg>

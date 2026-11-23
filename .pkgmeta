@@ -1,0 +1,10 @@
+package-as: AndoMaps
+
+# Kept in the repo, left out of the addon zip
+ignore:
+  - README.md
+  - Media/AndoMaps-logo.png
+  - Media/AndoMaps-emblem.png
+  - Media/AndoMaps-emblem.svg
+  - Media/AndoMaps-compass.svg
+  - Media/AndoMaps-compass-64.png

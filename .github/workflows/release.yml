@@ -1,0 +1,26 @@
+# Packages AndoMaps and uploads it to CurseForge (and a GitHub release)
+# whenever a version tag is pushed, e.g.  git tag 2.12 && git push --tags
+name: Package and release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write   # lets the packager create the GitHub release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}       # CurseForge API token (repo secret)
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}   # for the GitHub release
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # the packager builds the changelog from history
+
+      - name: Package and upload
+        uses: BigWigsMods/packager@v2

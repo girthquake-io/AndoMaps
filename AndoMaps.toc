@@ -1,0 +1,15 @@
+## Interface: 16001
+## Title: AndoMaps
+## Notes: Type a destination and get the quickest route there by foot, flight path, boat, zeppelin, tram or hearthstone. Includes dungeon and raid entrances.
+## Version: 2.12
+## Author: Ando
+## SavedVariables: AndoMapsDB
+## SavedVariablesPerCharacter: AndoMapsCharDB
+## OptionalDeps: TomTom
+## IconTexture: Interface\AddOns\AndoMaps\Media\AndoMapsCompass
+## AddonCompartmentFunc: AndoMaps_OnAddonCompartmentClick
+## AddonCompartmentFuncOnEnter: AndoMaps_OnAddonCompartmentEnter
+## AddonCompartmentFuncOnLeave: AndoMaps_OnAddonCompartmentLeave
+Data.lua
+Core.lua
+UI.lua
