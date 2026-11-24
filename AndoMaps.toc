@@ -1,7 +1,7 @@
 ## Interface: 16001
 ## Title: AndoMaps
 ## Notes: Type a destination and get the quickest route there by foot, flight path, boat, zeppelin, tram or hearthstone. Includes dungeon and raid entrances.
-## Version: 2.16
+## Version: 2.17
 ## Author: Ando
 ## X-Curse-Project-ID: 1825729
 ## SavedVariables: AndoMapsDB

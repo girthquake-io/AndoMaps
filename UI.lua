@@ -904,7 +904,13 @@ local function CreateMapButton()
     mapBtn:SetSize(32, 32)
     -- Top-right corner, tucked under any of Blizzard's own map buttons that sit there.
     local function PlaceMapButton()
-        local y = -10
+        mapBtn:ClearAllPoints()
+        local p = AM.db.mapBtnPos -- set by Shift+dragging the button
+        if p then
+            mapBtn:SetPoint("TOPRIGHT", sc, "TOPRIGHT", p.x, p.y)
+            return
+        end
+        local y = -14
         local scTop = sc:GetTop()
         local scRight = sc:GetRight()
         if scTop and scRight then
@@ -915,10 +921,29 @@ local function CreateMapButton()
                 end
             end
         end
-        mapBtn:ClearAllPoints()
-        mapBtn:SetPoint("TOPRIGHT", sc, "TOPRIGHT", -10, y)
+        -- Far enough in to clear the carved edge of the map art.
+        mapBtn:SetPoint("TOPRIGHT", sc, "TOPRIGHT", -24, y)
     end
     PlaceMapButton()
+    -- Shift+drag moves it; Shift+right-click puts it back.
+    mapBtn:SetMovable(true)
+    mapBtn:SetClampedToScreen(true)
+    mapBtn:RegisterForDrag("LeftButton")
+    mapBtn:SetScript("OnDragStart", function(self)
+        if not IsShiftKeyDown() then return end
+        self.dragged = true
+        self:StartMoving()
+    end)
+    mapBtn:SetScript("OnDragStop", function(self)
+        self:StopMovingOrSizing()
+        self:SetUserPlaced(false) -- we keep the spot ourselves, relative to the map
+        local r, t, sr, st = self:GetRight(), self:GetTop(), sc:GetRight(), sc:GetTop()
+        if r and sr then
+            local s = self:GetEffectiveScale() / sc:GetEffectiveScale()
+            AM.db.mapBtnPos = { x = r * s - sr, y = t * s - st }
+        end
+        PlaceMapButton()
+    end)
     wm:HookScript("OnShow", function() C_Timer.After(0, PlaceMapButton) end)
     local top = OpenMapAPI and OpenMapAPI.ArtTopLevel and OpenMapAPI.ArtTopLevel()
     mapBtn:SetFrameLevel(math.max((top or 0) + 20, sc:GetFrameLevel() + 50))
@@ -938,7 +963,7 @@ local function CreateMapButton()
     glow:SetAllPoints()
     glow:SetBlendMode("ADD")
     glow:SetAlpha(0.35)
-    mapBtn:SetScript("OnMouseDown", function() icon:SetPoint("TOPLEFT", 1, -1); icon:SetPoint("BOTTOMRIGHT", -1, 1) end)
+    mapBtn:SetScript("OnMouseDown", function(self) self.dragged = nil; icon:SetPoint("TOPLEFT", 1, -1); icon:SetPoint("BOTTOMRIGHT", -1, 1) end)
     mapBtn:SetScript("OnMouseUp", function() icon:SetAllPoints() end)
     -- "Route here" picker: a see-through layer over the map that catches one click.
     -- The mouse wheel still reaches the map, so you can zoom while picking.
@@ -987,8 +1012,12 @@ local function CreateMapButton()
     pick:SetScript("OnHide", function() UI.picking = false; pcall(ResetCursor) end)
     wm:HookScript("OnHide", StopPicking)
 
-    mapBtn:SetScript("OnClick", function(_, button)
-        if button == "RightButton" then
+    mapBtn:SetScript("OnClick", function(self, button)
+        if self.dragged then self.dragged = nil return end
+        if button == "RightButton" and IsShiftKeyDown() then
+            AM.db.mapBtnPos = nil
+            PlaceMapButton()
+        elseif button == "RightButton" then
             StopPicking()
             AM.ToggleUI()
         elseif UI.picking then
@@ -1006,6 +1035,7 @@ local function CreateMapButton()
         GameTooltip:AddLine("Left-click, then click the map: route there.", 0.85, 0.85, 0.85, true)
         GameTooltip:AddLine("Or Alt+click anywhere on the map.", 0.85, 0.85, 0.85, true)
         GameTooltip:AddLine("Right-click: open the AndoMaps window.", 0.7, 0.7, 0.7, true)
+        GameTooltip:AddLine("Shift+drag: move this button. Shift+right-click: put it back.", 0.7, 0.7, 0.7, true)
         GameTooltip:Show()
     end)
     mapBtn:SetScript("OnLeave", GameTooltip_Hide)
