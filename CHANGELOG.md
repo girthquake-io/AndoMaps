@@ -1,5 +1,8 @@
 # AndoMaps changelog
 
+## 2.16
+- The world map button's shadow is centred, so the compass no longer looks lopsided.
+
 ## 2.15
 - The world map button is now the AndoMaps compass on its own, with a soft shadow and a glow on hover, instead of a small emblem inside a minimap ring.
 - Zeppelin steps show a zeppelin icon.

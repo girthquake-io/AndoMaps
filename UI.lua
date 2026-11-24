@@ -924,12 +924,12 @@ local function CreateMapButton()
     mapBtn:SetFrameLevel(math.max((top or 0) + 20, sc:GetFrameLevel() + 50))
     mapBtn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
     -- The compass already has its own gold rim, so it stands alone: no Blizzard
-    -- border around it, a soft shadow under it and a gentle glow on hover.
+    -- border around it, a thin even dark edge around it and a gentle glow on hover.
     local shadow = mapBtn:CreateTexture(nil, "BACKGROUND")
     shadow:SetTexture(COMPASS)
-    shadow:SetVertexColor(0, 0, 0, 0.6)
-    shadow:SetSize(34, 34)
-    shadow:SetPoint("CENTER", 1, -2)
+    shadow:SetVertexColor(0, 0, 0, 0.5)
+    shadow:SetSize(35, 35)
+    shadow:SetPoint("CENTER")
     local icon = mapBtn:CreateTexture(nil, "ARTWORK")
     icon:SetTexture(COMPASS)
     icon:SetAllPoints()
