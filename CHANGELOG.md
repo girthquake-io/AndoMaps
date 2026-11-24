@@ -1,5 +1,8 @@
 # AndoMaps changelog
 
+## 2.19
+- The minimap button's icon sits dead centre in its gold ring, where Blizzard's own minimap buttons put theirs.
+
 ## 2.18
 - New minimap button icon: the compass rose on a full blue face, framed by the minimap ring, instead of a smaller round compass sitting off-centre inside it.
 

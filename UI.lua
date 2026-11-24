@@ -797,8 +797,13 @@ mb:RegisterForDrag("LeftButton")
 mb:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
 local mbIcon = mb:CreateTexture(nil, "BACKGROUND")
 mbIcon:SetTexture(MINIMAP_ICON)
-mbIcon:SetSize(20, 20)
-mbIcon:SetPoint("TOPLEFT", 7, -5)
+-- Where Blizzard's own tracking button puts its icon, dead centre in the ring.
+local function SeatIcon(tex)
+    tex:ClearAllPoints()
+    tex:SetSize(20, 20)
+    tex:SetPoint("TOPLEFT", 6, -6)
+end
+SeatIcon(mbIcon)
 local mbBorder = mb:CreateTexture(nil, "OVERLAY")
 mbBorder:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
 mbBorder:SetSize(53, 53)
@@ -845,6 +850,13 @@ local function SetupMinimap()
         AM.db.minimapIcon.hide = not AM.db.minimap
         if not dbi:IsRegistered("AndoMaps") then dbi:Register("AndoMaps", obj, AM.db.minimapIcon) end
         if AM.db.minimap then dbi:Show("AndoMaps") else dbi:Hide("AndoMaps") end
+        -- LibDBIcon's classic layout sets the icon 17px at (7,-6), a little high
+        -- and left of the ring's opening; seat ours where Blizzard's would be.
+        local btn = dbi.GetMinimapButton and dbi:GetMinimapButton("AndoMaps")
+        if btn and btn.icon then
+            SeatIcon(btn.icon)
+            if btn.background then SeatIcon(btn.background) end
+        end
         mb:Hide()
     else
         PlaceOwnButton()
