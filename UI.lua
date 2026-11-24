@@ -63,7 +63,8 @@ FirstIcon("zeppelin", {
     "Interface\\Icons\\INV_Misc_Toy_Zeppelin",
 })
 AM.ICON = ICON
-local COMPASS = "Interface\\AddOns\\AndoMaps\\Media\\AndoMapsCompass" -- minimap icon: just the compass
+local COMPASS = "Interface\\AddOns\\AndoMaps\\Media\\AndoMapsCompass" -- the round compass, gold rim and all
+local MINIMAP_ICON = "Interface\\AddOns\\AndoMaps\\Media\\AndoMapsMinimap" -- square, no rim: the minimap ring frames it
 local DEST_ICON = { dungeon = true, raid = true, bank = true, ah = true }
 local function LegIcon(leg)
     if leg.kind == "teleport" then return leg.link and leg.link.icon or "Interface\\Icons\\Spell_Arcane_TeleportStormWind" end
@@ -795,7 +796,7 @@ mb:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 mb:RegisterForDrag("LeftButton")
 mb:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
 local mbIcon = mb:CreateTexture(nil, "BACKGROUND")
-mbIcon:SetTexture(COMPASS)
+mbIcon:SetTexture(MINIMAP_ICON)
 mbIcon:SetSize(20, 20)
 mbIcon:SetPoint("TOPLEFT", 7, -5)
 local mbBorder = mb:CreateTexture(nil, "OVERLAY")
@@ -836,7 +837,7 @@ local function SetupMinimap()
     dbi = dbi or (LibStub and LibStub("LibDBIcon-1.0", true))
     if LDB and dbi then
         local obj = LDB:GetDataObjectByName("AndoMaps") or LDB:NewDataObject("AndoMaps", {
-            type = "launcher", text = "AndoMaps", icon = COMPASS,
+            type = "launcher", text = "AndoMaps", icon = MINIMAP_ICON,
             OnClick = function(_, button) LauncherClick(button) end,
             OnTooltipShow = ShowTooltip,
         })

@@ -1,5 +1,8 @@
 # AndoMaps changelog
 
+## 2.18
+- New minimap button icon: the compass rose on a full blue face, framed by the minimap ring, instead of a smaller round compass sitting off-centre inside it.
+
 ## 2.17
 - The world map button sits further in from the map's right edge, clear of the carved border.
 - **Shift+drag** the world map button to move it anywhere on the map; it remembers the spot. Shift+right-click puts it back.
